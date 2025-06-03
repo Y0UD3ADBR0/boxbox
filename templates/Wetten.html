@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Platzierungen – Manuelle Fahrerauswahl</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h2 { margin-top: 20px; }
+    label { display: block; margin-top: 10px; }
+    select { width: 300px; padding: 5px; }
+    .rennen { border: 1px solid #ccc; padding: 15px; margin-top: 20px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>F1 - Fahrerplatzierungen</h1>
+
+  <div class="rennen">
+    <h2 class="next_race">Rennen - </h2>
+
+    <label>Platz 1:
+      <select name="pos1" class="fahrer-dropdown">
+      </select>
+    </label>
+
+    <label>Platz 2:
+      <select name="pos2" class="fahrer-dropdown">
+      </select>
+    </label>
+
+    <label>Platz 3:
+      <select name="pos3" class="fahrer-dropdown">
+      </select>
+    </label>
+
+    <label>Platz 4:
+      <select name="pos4" class="fahrer-dropdown">
+      </select>
+    </label>
+
+    <label>Platz 5:
+      <select name="pos5" class="fahrer-dropdown">
+      </select>
+    </label>
+  </div>
+    <script>
+      async function fetchDrivers() {
+        const fahrer = await fetch("/api/F1/drivers").then(res => res.json())
+        console.log(fahrer)
+
+        const dropdowns = document.querySelectorAll(".fahrer-dropdown");
+        dropdowns.forEach(select => {
+          const option = document.createElement("option");
+          option.value = "Default";
+          option.textContent = "Bitte Auswählen";
+          select.appendChild(option);
+          fahrer.forEach(name => {
+              const option = document.createElement("option");
+              option.value = name;
+              option.textContent = name;
+              select.appendChild(option);
+              });
+        });
+      }
+      async function fetchRace() {
+        const race = await fetch("/api/F1/next_race").then(res => res.json())
+
+        const dropdowns = document.querySelectorAll(".next_race");
+        dropdowns.forEach(select => {
+            select.textContent += race
+              });
+      }
+      fetchDrivers();
+      fetchRace();
+    </script>
+</body>
+</html>
