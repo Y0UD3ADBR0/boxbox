@@ -1,9 +1,9 @@
 
-
-from argon2 import PasswordHasher, exceptions, hash_password
+from argon2 import PasswordHasher, exceptions
 
 
 ph = PasswordHasher()
+
 
 def hash_password(password):
     return ph.hash(password)

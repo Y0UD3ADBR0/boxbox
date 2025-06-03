@@ -20,3 +20,10 @@ class Bets(db.Model):
     points = db.Column(db.Integer)
     time_stamp = db.Column(db.DateTime, nullable=False)
 
+class Token(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    token = db.Column(db.String(20), nullable=False)
+    expiration_date = db.Column(db.DateTime, nullable=False)
+
+
